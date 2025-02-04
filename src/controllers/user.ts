@@ -625,8 +625,8 @@ export const Signin = async (req: any, res: any) => {
 
     const user = await userModel.findOne({ email })
     if (!user) {
-        res.status(400).json({ message: "User doesn't exist" })
-        return;
+        return res.status(400).json({ message: "User doesn't exist" });
+
     }
     const isPasswordCorrect = await bcrypt.compare(password, user?.password);
     if (!isPasswordCorrect) {
