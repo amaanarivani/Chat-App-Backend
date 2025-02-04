@@ -1,7 +1,7 @@
 import express from "express";
 import { changePassword, checkAuth, forgetPassword, forgetPasswordOtp, getAllUsers, getCustomSingleUser, getSingleUser, Signin, signout, Signup, updateUser, verifyEmail, verifyEmailLogin } from "../controllers/user";
 import auth from "../middleware/auth";
-import { chatStart, getAllChatMessages, getAllChatSession } from "../controllers/chat_session";
+import { getAllChatMessages, getAllChatSession, sendMessages } from "../controllers/chat_session";
 
 const router = express.Router();
 
@@ -21,7 +21,7 @@ router.post("/get-custom-single-user", auth, getCustomSingleUser);
 
 
 // -----------------------------chats-------------------------------------------------------------------------
-router.post("/start-chat", auth, chatStart);
+router.post("/send-chat-messages", auth, sendMessages);
 router.post("/get-all-chat-session", auth, getAllChatSession);
 router.post("/get-all-chat-messages", auth, getAllChatMessages);
 
