@@ -1963,9 +1963,23 @@ export const getAllUsers = async (req: any, res: any) => {
         const resultCount = await userModel.find({}).countDocuments()
         res.status(200).json({ message: "User fetched", result, count: resultCount })
     } catch (error) {
-        res.status(500).json({ message: "Something went wrong" + error })
+        return res.status(500).json({ message: "Something went wrong" + error })
     }
 }
+
+export const getAllSuggestedUsers = async (req: any, res: any) => {
+    let { user_id } = req.body;
+    try {
+        if (!user_id) {
+            return res.status(400).json({ message: "Invalid user id" })
+        }
+        const result = await userModel.find({ _id: { $ne: user_id } }).select({ password: 0, code: 0, token: 0 }).limit(10)
+        res.status(200).json({ message: "Suggested users fetched", result })
+    } catch (error) {
+        return res.status(500).json({ message: "Something went wrong" + error })
+    }
+}
+
 
 export const changePassword = async (req: any, res: any) => {
     let { oldPassword, newPassword, user_id } = req.body;
