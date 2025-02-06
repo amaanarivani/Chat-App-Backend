@@ -66,7 +66,7 @@ export const getAllChatSession = async (req: any, res: any) => {
         // Fetch all chat sessions where the user is a participant
         const chats = await chatModel.find({ users: { $in: [user_id] } });
 
-        // Process each chat session to include receiver data and last message
+        // Process each chat session to include receiver data, last message, and unseen count
         const result = await Promise.all(chats.map(async (chat) => {
             // Find the other participant (receiver)
             const receiver_id = chat.users.find((userId: any) => userId.toString() !== user_id) || null;
@@ -81,6 +81,11 @@ export const getAllChatSession = async (req: any, res: any) => {
                 ? chat.chat_messages[chat.chat_messages.length - 1] // Get the last message
                 : null;
 
+            // Count unseen messages where the sender is not the current user
+            const notSeenCount = chat.chat_messages.reduce((count: any, message: any) => {
+                return (!message.seen && message.user_id.toString() !== user_id) ? count + 1 : count;
+            }, 0);
+
             return {
                 ...chat.toObject(),
                 receiver: receiver_data,
@@ -94,6 +99,7 @@ export const getAllChatSession = async (req: any, res: any) => {
                     status: lastMessage.status,
                     createdAt: lastMessage.created_at
                 } : null, // If no messages exist, return null
+                notSeenCount, // Add notSeenCount field
             };
         }));
 
@@ -104,7 +110,6 @@ export const getAllChatSession = async (req: any, res: any) => {
         return res.status(500).json({ message: "Something went wrong: " + error.message });
     }
 };
-
 
 
 
@@ -123,3 +128,26 @@ export const getAllChatMessages = async (req: any, res: any) => {
         return res.status(500).json({ message: "Something went wrong" + error.message })
     }
 }
+
+
+export const getNotSeenMessagesCount = async (req: any, res: any) => {
+    let { user_id } = req.body;
+
+    try {
+        const chats = await chatModel.find({ users: { $in: [user_id] } });
+
+        let not_seen_count = 0;
+
+        chats.forEach(chat => {
+            chat.chat_messages.forEach((message: any) => {
+                if (!message.seen) {
+                    not_seen_count++;
+                }
+            });
+        });
+
+        return res.status(200).json({ not_seen_count });
+    } catch (error: any) {
+        return res.status(500).json({ message: "Something went wrong: " + error.message });
+    }
+};
