@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String
     },
+    friends: [String],
     avatar: {
         type: String,
         default: ""

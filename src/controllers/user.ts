@@ -2040,3 +2040,47 @@ export const getCustomSingleUser = async (req: any, res: any) => {
         return res.status(500).json({ message: "Something went wrong" + error.message })
     }
 }
+
+
+export const addFriends = async (req: any, res: any) => {
+    let { user_id, friend_id } = req.body;
+    if (!user_id || !friend_id) {
+        return res.status(400).json({ message: "Invalid user id" })
+    }
+    try {
+        const userDoc = await userModel.findById(user_id);
+        const friendDoc = await userModel.findById(friend_id);
+        if (!userDoc || !friendDoc) {
+            return res.status(400).json({ message: "User or friend doesn't exist" })
+        }
+        const result = await userModel.findByIdAndUpdate(
+            user_id, {
+            $push: { friends: friend_id }
+        }, { new: true }
+        )
+        res.status(200).json({ message: "Friend added", result })
+    } catch (error: any) {
+        return res.status(500).json({ message: "Something went wrong" + error.message })
+    }
+}
+
+export const getAllMyFriends = async (req: any, res: any) => {
+    let { user_id } = req.body;
+    try {
+        const userDoc: any = await userModel.findById(user_id)
+        if (!userDoc) {
+            return res.status(400).json({ message: "User doesn't exist" })
+        }
+        let friendsIds;
+        let result = [];
+        for (let i = 0; i < userDoc.friends.length; i++) {
+            friendsIds = userDoc.friends[i];
+            console.log(friendsIds, "friends ids");
+            let friendDoc = await userModel.findOne({ _id: friendsIds }).select({ password: 0, code: 0, token: 0 })
+            result.push(friendDoc)
+        }
+        res.status(200).json({ message: "Friends fetched", result })
+    } catch (error) {
+        return res.status(500).json({ message: "Something went wrong" + error })
+    }
+}
