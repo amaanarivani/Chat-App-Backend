@@ -151,3 +151,42 @@ export const getNotSeenMessagesCount = async (req: any, res: any) => {
         return res.status(500).json({ message: "Something went wrong: " + error.message });
     }
 };
+
+export const initiateChatSession = async (req: any, res: any) => {
+    let { initiate_user_id, client_user_id, message } = req.body;
+    if (!initiate_user_id) {
+        res.status(400).json({ message: "User doesn't exist" })
+    }
+    try {
+        let exist = await chatModel.findOne({ users: { $all: [initiate_user_id, client_user_id] } })
+        let result;
+        if (message) {
+            if (exist) {
+                return;
+            } else {
+                result = await chatModel.create({
+                    users: [initiate_user_id, client_user_id],
+                    chat_start_at: Date.now(),
+                    chat_end_at: '',
+                    socket_id: '',
+                    chat_messages: [{
+                        user_id: initiate_user_id,
+                        message,
+                        message_type: 15,
+                        seen: false,
+                        status: 17,
+                        created_at: Date.now(),
+                        updated_at: Date.now()
+                    }],
+                    created_at: Date.now(),
+                    updated_at: Date.now(),
+                })
+            }
+        } else {
+            return res.status(400).json({ message: "Please provide message" })
+        }
+        res.status(200).json({ message: "chat started", result })
+    } catch (error: any) {
+        return res.status(500).json({ message: "Something went wrong" + error.message })
+    }
+}
