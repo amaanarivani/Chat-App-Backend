@@ -1973,7 +1973,7 @@ export const getAllSuggestedUsers = async (req: any, res: any) => {
         if (!user_id) {
             return res.status(400).json({ message: "Invalid user id" })
         }
-        const result = await userModel.find({ _id: { $ne: user_id } }).select({ password: 0, code: 0, token: 0 }).limit(10)
+        const result = await userModel.find({ _id: { $ne: user_id }, friends: { $ne: [user_id] } }).select({ password: 0, code: 0, token: 0 }).limit(10)
         res.status(200).json({ message: "Suggested users fetched", result })
     } catch (error) {
         return res.status(500).json({ message: "Something went wrong" + error })
@@ -2053,6 +2053,11 @@ export const addFriends = async (req: any, res: any) => {
         if (!userDoc || !friendDoc) {
             return res.status(400).json({ message: "User or friend doesn't exist" })
         }
+        await userModel.findByIdAndUpdate(
+            friend_id, {
+            $push: { friends: user_id }
+        }, { new: true }
+        )
         const result = await userModel.findByIdAndUpdate(
             user_id, {
             $push: { friends: friend_id }
@@ -2080,6 +2085,30 @@ export const getAllMyFriends = async (req: any, res: any) => {
             result.push(friendDoc)
         }
         res.status(200).json({ message: "Friends fetched", result })
+    } catch (error) {
+        return res.status(500).json({ message: "Something went wrong" + error })
+    }
+}
+
+export const removeFriend = async (req: any, res: any) => {
+    let { user_id, friend_id } = req.body;
+    try {
+        const userDoc = await userModel.findById(user_id);
+        const friendDoc = await userModel.findById(friend_id);
+        if (!userDoc || !friendDoc) {
+            return res.status(400).json({ message: "User or friend doesn't exist" })
+        }
+        await userModel.findByIdAndUpdate(
+            friend_id, {
+            $pull: { friends: user_id }
+        }, { new: true }
+        )
+        await userModel.findByIdAndUpdate(
+            user_id, {
+            $pull: { friends: friend_id }
+        }, { new: true }
+        )
+        res.status(200).json({ message: "Friend removed" })
     } catch (error) {
         return res.status(500).json({ message: "Something went wrong" + error })
     }

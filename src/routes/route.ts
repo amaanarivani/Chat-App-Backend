@@ -1,5 +1,5 @@
 import express from "express";
-import { addFriends, changePassword, checkAuth, forgetPassword, forgetPasswordOtp, getAllMyFriends, getAllSuggestedUsers, getAllUsers, getCustomSingleUser, getSingleUser, Signin, signout, Signup, updateUser, verifyEmail, verifyEmailLogin } from "../controllers/user";
+import { addFriends, changePassword, checkAuth, forgetPassword, forgetPasswordOtp, getAllMyFriends, getAllSuggestedUsers, getAllUsers, getCustomSingleUser, getSingleUser, removeFriend, Signin, signout, Signup, updateUser, verifyEmail, verifyEmailLogin } from "../controllers/user";
 import auth from "../middleware/auth";
 import { getAllChatMessages, getAllChatSession, getNotSeenMessagesCount, sendMessages } from "../controllers/chat_session";
 
@@ -20,6 +20,7 @@ router.post("/change-password", auth, changePassword);
 router.post("/update-user", auth, updateUser);
 router.post("/get-custom-single-user", auth, getCustomSingleUser);
 router.post("/add-friends", auth, addFriends);
+router.post("/remove-friends", auth, removeFriend);
 router.post("/get-all-my-friends", auth, getAllMyFriends);
 
 
