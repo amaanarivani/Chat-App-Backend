@@ -10,6 +10,8 @@ import { Server } from "socket.io";
 import chatModel from "./models/chatModel";
 import { DateTime } from "luxon";
 import chatStatusModel from "./models/userChatStatus";
+import notificationModel from "./models/notificationModel";
+import { sendNotifications } from "../utils/sendNotification";
 
 connectDatabase();
 const app = express();
@@ -79,6 +81,10 @@ io.on("connection", (socket: any) => {
                 }
             })
             io.to(data?.chat_id.toString()).emit("live_message", { messageDoc });
+            let token: any = await notificationModel.findOne({ user_id: data?.user_id }).populate(["user_id"]);
+            let title = `Hey, ${token?.user_id?.name} you have a new message`;
+            let body = `${data?.message}`;
+            await sendNotifications({ tokens: [token?.pushNotificationToken], title, body });
         } catch (error) {
 
         }
