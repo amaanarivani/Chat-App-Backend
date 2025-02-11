@@ -1,4 +1,6 @@
+import { sendNotifications } from "../../utils/sendNotification";
 import chatModel from "../models/chatModel";
+import notificationModel from "../models/notificationModel";
 import userModel from "../models/user";
 
 export const sendMessages = async (req: any, res: any) => {
@@ -181,6 +183,10 @@ export const initiateChatSession = async (req: any, res: any) => {
                     created_at: Date.now(),
                     updated_at: Date.now(),
                 })
+                let token: any = await notificationModel.findOne({ user_id: client_user_id }).populate(["user_id"]);
+                let title = `Hey, ${token?.user_id?.name} you have a new message`;
+                let body = `${message}`;
+                await sendNotifications({ tokens: [token?.pushNotificationToken], title, body });
             }
         } else {
             return res.status(400).json({ message: "Please provide message" })

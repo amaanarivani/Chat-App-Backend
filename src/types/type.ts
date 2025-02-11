@@ -27,3 +27,9 @@ export interface chatModelType extends DocumentResult<chatModelType>, Document {
     updated_at: Date
     updated_by: mongoose.Schema.Types.ObjectId
 }
+export interface notificationModelType extends DocumentResult<notificationModelType>, Document {
+    user_id: mongoose.Schema.Types.ObjectId
+    pushNotificationToken: string
+    notifications: []
+    created_at: Date
+}
