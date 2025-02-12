@@ -2048,10 +2048,15 @@ export const addFriends = async (req: any, res: any) => {
         return res.status(400).json({ message: "Invalid user id" })
     }
     try {
-        const userDoc = await userModel.findById(user_id);
+        const userDoc: any = await userModel.findById(user_id);
         const friendDoc = await userModel.findById(friend_id);
         if (!userDoc || !friendDoc) {
             return res.status(400).json({ message: "User or friend doesn't exist" })
+        }
+        for (let i = 0; i < userDoc.friends.length; i++) {
+            if (userDoc?.friends[i] == friend_id) {
+                return res.status(400).json({ message: "Already friends" })
+            }
         }
         await userModel.findByIdAndUpdate(
             friend_id, {
