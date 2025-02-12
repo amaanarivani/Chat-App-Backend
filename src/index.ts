@@ -81,10 +81,11 @@ io.on("connection", (socket: any) => {
                 }
             })
             io.to(data?.chat_id.toString()).emit("live_message", { messageDoc });
-            let token: any = await notificationModel.findOne({ user_id: data?.user_id }).populate(["user_id"]);
-            let title = `Hey, ${token?.user_id?.name} you have a new message`;
+            let userToken: any = await notificationModel.findOne({ user_id: data?.user_id }).populate(["user_id"]);
+            let friendToken: any = await notificationModel.findOne({ user_id: data?.friend_id }).populate(["user_id"]);
+            let title = `Hey, ${userToken?.user_id?.name} you have a new message`;
             let body = `${data?.message}`;
-            await sendNotifications({ tokens: [token?.pushNotificationToken], title, body });
+            await sendNotifications({ tokens: [friendToken?.pushNotificationToken], title, body });
         } catch (error) {
 
         }
