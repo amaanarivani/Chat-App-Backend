@@ -116,12 +116,20 @@ export const getAllChatSession = async (req: any, res: any) => {
 
 
 export const getAllChatMessages = async (req: any, res: any) => {
-    let { user_id, client_user_id } = req.body;
-    if (!user_id || !client_user_id) {
-        return res.status(400).json({ message: "Invalid request" })
-    }
+    let { session_id, currentDate } = req.body;
+
+    const resultsPerPage = 10;
+
+    const pages: number = parseInt(req.params.page);
+    let page = pages >= 1 ? pages : 1;
+    page = page - 1;
+
     try {
-        const result = await chatModel.findOne({ users: { $all: [user_id, client_user_id] } })
+        if (!session_id) {
+            return res.status(400).json({ message: "Invalid request" })
+        }
+        // const result = await chatModel.findOne({ users: { $all: [user_id, client_user_id] } })
+        const result = await chatModel.findById(session_id)
         if (!result) {
             return res.status(400).json({ message: "Chats doesn't exist" })
         }
