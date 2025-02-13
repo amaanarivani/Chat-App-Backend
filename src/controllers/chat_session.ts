@@ -115,25 +115,51 @@ export const getAllChatSession = async (req: any, res: any) => {
 
 
 
-export const getAllChatMessages = async (req: any, res: any) => {
-    let { session_id, currentDate } = req.body;
+export const getSingleUserChatMessages = async (req: any, res: any) => {
+    let { session_id } = req.body;
 
+    console.log("0");
+    try {
+        
     const resultsPerPage = 10;
 
     const pages: number = parseInt(req.params.page);
     let page = pages >= 1 ? pages : 1;
     page = page - 1;
+    let chatMessages: any = [];
 
-    try {
+        console.log("1");
         if (!session_id) {
             return res.status(400).json({ message: "Invalid request" })
         }
-        // const result = await chatModel.findOne({ users: { $all: [user_id, client_user_id] } })
+        console.log("2");
+        // const result = await chatModel.findById(session_id)
+        // const result = await chatModel.findById(session_id).populate(["chat_messages.user_id"])
         const result = await chatModel.findById(session_id)
+        const resultCount = await chatModel.findById(session_id).countDocuments()
+        console.log("3");
         if (!result) {
             return res.status(400).json({ message: "Chats doesn't exist" })
         }
-        res.status(200).json({ message: "chats fetched", result })
+        console.log("4");
+        let chat_id = result?._id;
+        let messages = [...result.chat_messages];
+        messages.reverse();
+        for (let i = (resultsPerPage * page); i < messages.length; i++) {
+            console.log("5");
+            
+            if (chatMessages.length >= resultsPerPage) {
+                console.log("6");
+                break;
+            } else {
+                console.log("7");
+                chatMessages.push(messages[i]);
+            }
+        }
+        console.log("8");
+        // console.log(messages, "all reverse chat messages");
+        res.status(200).json({ message: "chats fetched", result: chatMessages.reverse(), chat_id, resultCount })
+        // res.status(200).json({ message: "chats fetched", result })
     } catch (error: any) {
         return res.status(500).json({ message: "Something went wrong" + error.message })
     }
