@@ -120,13 +120,13 @@ export const getSingleUserChatMessages = async (req: any, res: any) => {
 
     console.log("0");
     try {
-        
-    const resultsPerPage = 10;
 
-    const pages: number = parseInt(req.params.page);
-    let page = pages >= 1 ? pages : 1;
-    page = page - 1;
-    let chatMessages: any = [];
+        const resultsPerPage = 10;
+
+        const pages: number = parseInt(req.params.page);
+        let page = pages >= 1 ? pages : 1;
+        page = page - 1;
+        let chatMessages: any = [];
 
         console.log("1");
         if (!session_id) {
@@ -147,7 +147,7 @@ export const getSingleUserChatMessages = async (req: any, res: any) => {
         messages.reverse();
         for (let i = (resultsPerPage * page); i < messages.length; i++) {
             console.log("5");
-            
+
             if (chatMessages.length >= resultsPerPage) {
                 console.log("6");
                 break;
@@ -162,6 +162,75 @@ export const getSingleUserChatMessages = async (req: any, res: any) => {
         // res.status(200).json({ message: "chats fetched", result })
     } catch (error: any) {
         return res.status(500).json({ message: "Something went wrong" + error.message })
+    }
+}
+
+export const getSingleChatSession = async (req: any, res: any) => {
+    let { session_id, current_date } = req.body;
+
+    const resultsPerPage = 10;
+
+    const pages: number = parseInt(req.params.page);
+    let page = pages >= 1 ? pages : 1;
+    page = page - 1
+
+    try {
+        let chat_doc: any = await chatModel.findById(session_id).select({ chat_messages: 0 });
+        let result: any = await chatModel.findById(session_id);
+
+        let chatMessages: any = []
+        let decryptedMessage: any = []
+        let data: string = ''
+
+        if (result) {
+            let messages = [...result.chat_messages]
+            messages.reverse()
+
+            let startingindex
+
+            for (let i = 0; i < messages.length; i++) {
+                if (messages[i].created_at <= current_date) {
+                    startingindex = i
+                    break
+                }
+            }
+
+            messages = messages.slice(startingindex)
+
+            if (messages.length <= resultsPerPage && page == 0) {
+
+                messages.forEach(sd => {
+                    if (sd.message) {
+                        // data = decryptData(sd.message)
+                        data = sd.message;
+                        decryptedMessage.push({ ...sd._doc, message: data })
+                    } else {
+                        decryptedMessage.push({ ...sd._doc })
+                    }
+                })
+
+                return res.status(200).json({ messages: decryptedMessage.reverse(), totalMessageCount: messages.length, result: chat_doc })
+            } else {
+                let newmsglist = messages.slice(page * resultsPerPage, resultsPerPage + (page * resultsPerPage))
+
+                newmsglist.forEach(sd => {
+                    if (sd.message) {
+                        // data = decryptData(sd.message)
+                        data = sd.message;
+                        decryptedMessage.push({ ...sd._doc, message: data })
+                    } else {
+                        decryptedMessage.push({ ...sd._doc })
+                    }
+                })
+                return res.status(200).json({ messages: decryptedMessage.reverse(), totalMessageCount: messages.length, result: chat_doc })
+            }
+        }
+
+        res.status(200).json({ message: "Single Chat Session fetch successfully", result: chat_doc, chatMessages })
+
+    } catch (error) {
+        return res.status(500).json({ message: "Something went wrong" + error })
+
     }
 }
 
