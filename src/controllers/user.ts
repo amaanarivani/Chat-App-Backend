@@ -205,7 +205,7 @@ export const Signup = async (req: any, res: any) => {
 
                     <div class="u-row-container" style="padding: 0px;background-color: transparent">
                         <div class="u-row"
-                            style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #5922ED;">
+                            style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #279EFF;">
                             <div
                                 style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
                                 <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #003399;"><![endif]-->
@@ -331,7 +331,7 @@ export const Signup = async (req: any, res: any) => {
                                                                         ${name},
                                                                     </span></p>
                                                                 <p style="font-size: 14px; line-height: 160%;"><span
-                                                                        style="font-size: 18px; line-height: 28.8px;">Thank you for choosing TrainifAI! You're almost ready to get started. Please use given verification code to verify email address
+                                                                        style="font-size: 18px; line-height: 28.8px;">Thank you for choosing Convo! You're almost ready to get started. Please use given verification code to verify email address
                                                                     </span></p>
                                                             </div>
 
@@ -351,7 +351,7 @@ export const Signup = async (req: any, res: any) => {
                                                             <div align="center">
                                                                 <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="" style="height:46px; v-text-anchor:middle; width:234px;" arcsize="8.5%"  stroke="f" fillcolor="#ff6600"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
                                                                 <p target="_blank" class="v-button"
-                                                                    style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #5922ED; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
+                                                                    style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #279EFF; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
                                                                     <span
                                                                         style="display:block;padding:14px 44px 13px;line-height:120%;"><span
                                                                             style="font-size: 16px; line-height: 19.2px;"><strong><span
@@ -380,7 +380,7 @@ export const Signup = async (req: any, res: any) => {
                                                                         style="font-size: 18px; line-height: 28.8px;">Thanks,</span>
                                                                 </p>
                                                                 <p style="line-height: 160%; font-size: 14px;"><span
-                                                                        style="font-size: 18px; line-height: 28.8px;">TrainifAI</span>
+                                                                        style="font-size: 18px; line-height: 28.8px;">Convo</span>
                                                                 </p>
                                                             </div>
 
@@ -544,7 +544,7 @@ export const Signup = async (req: any, res: any) => {
 
                     <div class="u-row-container" style="padding: 0px;background-color: transparent">
                         <div class="u-row"
-                            style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #5922ED;">
+                            style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #279EFF;">
                             <div
                                 style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
                                 <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #003399;"><![endif]-->
@@ -569,7 +569,7 @@ export const Signup = async (req: any, res: any) => {
                                                                 style="font-size: 14px; color: #fafafa; line-height: 180%; text-align: center; word-wrap: break-word;">
                                                                 <p style="font-size: 14px; line-height: 180%;"><span
                                                                         style="font-size: 16px; line-height: 28.8px;">Copyrights
-                                                                        © TrainifAI | All Rights Reserved</span></p>
+                                                                        © Convo | All Rights Reserved</span></p>
                                                             </div>
 
                                                         </td>
@@ -926,7 +926,7 @@ export const verifyEmailLogin = async (req: any, res: any) => {
     
                         <div class="u-row-container" style="padding: 0px;background-color: transparent">
                             <div class="u-row"
-                                style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #5922ED;">
+                                style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #279EFF;">
                                 <div
                                     style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
                                     <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #003399;"><![endif]-->
@@ -1052,7 +1052,7 @@ export const verifyEmailLogin = async (req: any, res: any) => {
                                                                             ${result.name},
                                                                         </span></p>
                                                                     <p style="font-size: 14px; line-height: 160%;"><span
-                                                                            style="font-size: 18px; line-height: 28.8px;">Thank you for choosing TrainifAI! You're almost ready to get started. Please use given verification code to verify email address
+                                                                            style="font-size: 18px; line-height: 28.8px;">Thank you for choosing Convo! You're almost ready to get started. Please use given verification code to verify email address
                                                                         </span></p>
                                                                 </div>
     
@@ -1072,7 +1072,7 @@ export const verifyEmailLogin = async (req: any, res: any) => {
                                                                 <div align="center">
                                                                     <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="" style="height:46px; v-text-anchor:middle; width:234px;" arcsize="8.5%"  stroke="f" fillcolor="#ff6600"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
                                                                     <p target="_blank" class="v-button"
-                                                                        style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #5922ED; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
+                                                                        style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #279EFF; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
                                                                         <span
                                                                             style="display:block;padding:14px 44px 13px;line-height:120%;"><span
                                                                                 style="font-size: 16px; line-height: 19.2px;"><strong><span
@@ -1101,7 +1101,7 @@ export const verifyEmailLogin = async (req: any, res: any) => {
                                                                             style="font-size: 18px; line-height: 28.8px;">Thanks,</span>
                                                                     </p>
                                                                     <p style="line-height: 160%; font-size: 14px;"><span
-                                                                            style="font-size: 18px; line-height: 28.8px;">TrainifAI</span>
+                                                                            style="font-size: 18px; line-height: 28.8px;">Convo</span>
                                                                     </p>
                                                                 </div>
     
@@ -1265,7 +1265,7 @@ export const verifyEmailLogin = async (req: any, res: any) => {
     
                         <div class="u-row-container" style="padding: 0px;background-color: transparent">
                             <div class="u-row"
-                                style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #5922ED;">
+                                style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #279EFF;">
                                 <div
                                     style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
                                     <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #003399;"><![endif]-->
@@ -1290,7 +1290,7 @@ export const verifyEmailLogin = async (req: any, res: any) => {
                                                                     style="font-size: 14px; color: #fafafa; line-height: 180%; text-align: center; word-wrap: break-word;">
                                                                     <p style="font-size: 14px; line-height: 180%;"><span
                                                                             style="font-size: 16px; line-height: 28.8px;">Copyrights
-                                                                            © TrainifAI | All Rights Reserved</span></p>
+                                                                            © Convo | All Rights Reserved</span></p>
                                                                 </div>
     
                                                             </td>
@@ -1550,7 +1550,7 @@ export const forgetPasswordOtp = async (req: any, res: any) => {
     
                         <div class="u-row-container" style="padding: 0px;background-color: transparent">
                             <div class="u-row"
-                                style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #5922ED;">
+                                style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #279EFF;">
                                 <div
                                     style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
                                     <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #003399;"><![endif]-->
@@ -1676,7 +1676,7 @@ export const forgetPasswordOtp = async (req: any, res: any) => {
                                                                             ${result.name},
                                                                         </span></p>
                                                                     <p style="font-size: 14px; line-height: 160%;"><span
-                                                                            style="font-size: 18px; line-height: 28.8px;">Thank you for choosing TrainifAI! You're almost ready to get started. Please use given verification code to reset your password
+                                                                            style="font-size: 18px; line-height: 28.8px;">Thank you for choosing Convo! You're almost ready to get started. Please use given verification code to reset your password
                                                                         </span></p>
                                                                 </div>
     
@@ -1696,7 +1696,7 @@ export const forgetPasswordOtp = async (req: any, res: any) => {
                                                                 <div align="center">
                                                                     <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="" style="height:46px; v-text-anchor:middle; width:234px;" arcsize="8.5%"  stroke="f" fillcolor="#ff6600"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
                                                                     <p target="_blank" class="v-button"
-                                                                        style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #5922ED; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
+                                                                        style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #279EFF; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
                                                                         <span
                                                                             style="display:block;padding:14px 44px 13px;line-height:120%;"><span
                                                                                 style="font-size: 16px; line-height: 19.2px;"><strong><span
@@ -1725,7 +1725,7 @@ export const forgetPasswordOtp = async (req: any, res: any) => {
                                                                             style="font-size: 18px; line-height: 28.8px;">Thanks,</span>
                                                                     </p>
                                                                     <p style="line-height: 160%; font-size: 14px;"><span
-                                                                            style="font-size: 18px; line-height: 28.8px;">TrainifAI</span>
+                                                                            style="font-size: 18px; line-height: 28.8px;">Convo</span>
                                                                     </p>
                                                                 </div>
     
@@ -1889,7 +1889,7 @@ export const forgetPasswordOtp = async (req: any, res: any) => {
     
                         <div class="u-row-container" style="padding: 0px;background-color: transparent">
                             <div class="u-row"
-                                style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #5922ED;">
+                                style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #279EFF;">
                                 <div
                                     style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
                                     <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #003399;"><![endif]-->
@@ -1914,7 +1914,7 @@ export const forgetPasswordOtp = async (req: any, res: any) => {
                                                                     style="font-size: 14px; color: #fafafa; line-height: 180%; text-align: center; word-wrap: break-word;">
                                                                     <p style="font-size: 14px; line-height: 180%;"><span
                                                                             style="font-size: 16px; line-height: 28.8px;">Copyrights
-                                                                            © TrainifAI | All Rights Reserved</span></p>
+                                                                            © Convo | All Rights Reserved</span></p>
                                                                 </div>
     
                                                             </td>
