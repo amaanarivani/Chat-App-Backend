@@ -105,7 +105,7 @@ export const getAllChatSession = async (req: any, res: any) => {
             };
         }));
 
-        console.log(result, "------chat_doc to send--------");
+        // console.log(result, "------chat_doc to send--------");
 
         res.status(200).json({ message: "Chats fetched", result });
     } catch (error: any) {
@@ -263,12 +263,17 @@ export const initiateChatSession = async (req: any, res: any) => {
         res.status(400).json({ message: "User doesn't exist" })
     }
     try {
+        console.log("inside initiate try");
+
         let exist = await chatModel.findOne({ users: { $all: [initiate_user_id, client_user_id] } })
         let result;
         if (message) {
+            console.log("inside initiate if message");
             if (exist) {
+                console.log("inside initiate if exist");
                 return;
             } else {
+                console.log("inside initiate else exist");
                 result = await chatModel.create({
                     users: [initiate_user_id, client_user_id],
                     chat_start_at: Date.now(),
@@ -294,6 +299,7 @@ export const initiateChatSession = async (req: any, res: any) => {
         } else {
             return res.status(400).json({ message: "Please provide message" })
         }
+        console.log("inside initiate to send response");
         res.status(200).json({ message: "chat started", result })
     } catch (error: any) {
         return res.status(500).json({ message: "Something went wrong" + error.message })

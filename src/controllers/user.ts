@@ -1969,16 +1969,35 @@ export const getAllUsers = async (req: any, res: any) => {
 
 export const getAllSuggestedUsers = async (req: any, res: any) => {
     let { user_id } = req.body;
+
     try {
         if (!user_id) {
-            return res.status(400).json({ message: "Invalid user id" })
+            return res.status(400).json({ message: "Invalid user id" });
         }
-        const result = await userModel.find({ _id: { $ne: user_id }, friends: { $ne: [user_id] } }).select({ password: 0, code: 0, token: 0 }).limit(10)
-        res.status(200).json({ message: "Suggested users fetched", result })
-    } catch (error) {
-        return res.status(500).json({ message: "Something went wrong" + error })
+
+        // Fetch the user document
+        const userDoc: any = await userModel.findById(user_id);
+        if (!userDoc) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Get user's friends list and include the user itself to exclude
+        let userFriends = userDoc.friends || [];
+        userFriends.push(user_id);
+
+        console.log(userFriends, "user friends ids");
+
+        // Find suggested users excluding the user itself and their friends
+        const result = await userModel.find({ _id: { $nin: userFriends } }).select({ password: 0, code: 0, token: 0 })
+
+        res.status(200).json({ message: "Suggested users fetched", result });
+
+    } catch (error: any) {
+        console.error("Error fetching suggested users:", error);
+        return res.status(500).json({ message: "Something went wrong", error: error.message });
     }
-}
+};
+
 
 
 export const changePassword = async (req: any, res: any) => {
