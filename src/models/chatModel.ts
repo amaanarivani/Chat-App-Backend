@@ -9,6 +9,9 @@ const chatSchema = new mongoose.Schema({
     chat_end_at: {
         type: Date
     },
+    has_friends: {
+        type: Boolean,
+    },
     socket_id: {
         type: String
     },

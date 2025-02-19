@@ -284,6 +284,7 @@ export const initiateChatSession = async (req: any, res: any) => {
                     chat_start_at: Date.now(),
                     chat_end_at: '',
                     socket_id: '',
+                    has_friends: true,
                     chat_messages: [{
                         user_id: initiate_user_id,
                         message,

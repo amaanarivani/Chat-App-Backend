@@ -2105,6 +2105,7 @@ export const addFriends = async (req: any, res: any) => {
             await chatModel.findOneAndUpdate(
                 { users: { $all: [user_id, friend_id] } },
                 {
+                    has_friends: true,
                     $push: {
                         chat_messages: messageDoc
                     }
@@ -2115,6 +2116,7 @@ export const addFriends = async (req: any, res: any) => {
                 users: [user_id, friend_id],
                 chat_start_at: Date.now(),
                 chat_end_at: '',
+                has_friends: true,
                 socket_id: '',
                 chat_messages: [
                     messageDoc
@@ -2186,6 +2188,7 @@ export const removeFriend = async (req: any, res: any) => {
             await chatModel.findOneAndUpdate(
                 { users: { $all: [user_id, friend_id] } },
                 {
+                    has_friends: false,
                     $push: {
                         chat_messages: messageDoc
                     }
@@ -2196,6 +2199,7 @@ export const removeFriend = async (req: any, res: any) => {
                 users: [user_id, friend_id],
                 chat_start_at: Date.now(),
                 chat_end_at: '',
+                has_friends: false,
                 socket_id: '',
                 chat_messages: [
                     messageDoc

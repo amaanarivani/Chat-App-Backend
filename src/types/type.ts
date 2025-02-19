@@ -21,6 +21,7 @@ export interface chatModelType extends DocumentResult<chatModelType>, Document {
     users: []
     chat_start_at: string
     chat_end_at: string
+    has_friends: boolean
     socket_id: string
     chat_messages: []
     created_at: Date
