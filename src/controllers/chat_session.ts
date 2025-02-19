@@ -259,8 +259,13 @@ export const getNotSeenMessagesCount = async (req: any, res: any) => {
 
 export const initiateChatSession = async (req: any, res: any) => {
     let { initiate_user_id, client_user_id, message } = req.body;
-    if (!initiate_user_id) {
-        res.status(400).json({ message: "User doesn't exist" })
+    let userDoc = await userModel.findById(initiate_user_id)
+    let friendDoc = await userModel.findById(client_user_id)
+    if (!userDoc) {
+        return res.status(400).json({ message: "User doesn't exist" })
+    }
+    if (!friendDoc) {
+        return res.status(400).json({ message: "Friend doesn't exist" })
     }
     try {
         console.log("inside initiate try");
@@ -292,7 +297,7 @@ export const initiateChatSession = async (req: any, res: any) => {
                     updated_at: Date.now(),
                 })
                 let token: any = await notificationModel.findOne({ user_id: client_user_id }).populate(["user_id"]);
-                let title = `Hey, ${token?.user_id?.name} you have a new message`;
+                let title = `${userDoc?.name}`;
                 let body = `${message}`;
                 await sendNotifications({ tokens: [token?.pushNotificationToken], title, body });
             }
