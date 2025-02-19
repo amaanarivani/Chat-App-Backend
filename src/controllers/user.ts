@@ -2,6 +2,10 @@ import userModel from "../models/user";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { sendMailToUser } from "../../utils/sendMail";
+import chatModel from "../models/chatModel";
+import { DateTime } from "luxon";
+import notificationModel from "../models/notificationModel";
+import { sendNotifications } from "../../utils/sendNotification";
 // import sendMailToUser from "../utils/sendMail";
 // const sendMailToUser = require("../utils/sendMail");
 
@@ -2087,6 +2091,44 @@ export const addFriends = async (req: any, res: any) => {
             $push: { friends: friend_id }
         }, { new: true }
         )
+        let messageDoc = {
+            user_id: user_id,
+            message: `You are now friends`,
+            message_type: 16,
+            seen: false,
+            status: 17,
+            created_at: DateTime.now().toUTC().toISO(),
+            updated_at: DateTime.now().toUTC().toISO(),
+        }
+        let chatSessionExist = await chatModel.findOne({ users: { $all: [user_id, friend_id] } })
+        if (chatSessionExist) {
+            await chatModel.findOneAndUpdate(
+                { users: { $all: [user_id, friend_id] } },
+                {
+                    has_friends: true,
+                    $push: {
+                        chat_messages: messageDoc
+                    }
+                }
+            )
+        } else {
+            await chatModel.create({
+                users: [user_id, friend_id],
+                chat_start_at: Date.now(),
+                chat_end_at: '',
+                has_friends: true,
+                socket_id: '',
+                chat_messages: [
+                    messageDoc
+                ],
+                created_at: Date.now(),
+                updated_at: Date.now(),
+            })
+        }
+        let token: any = await notificationModel.findOne({ user_id: friend_id }).populate(["user_id"]);
+        let title = `Hey, ${friendDoc?.name}`;
+        let body = `${userDoc?.name} has added you as a friend`;
+        await sendNotifications({ tokens: [token?.pushNotificationToken], title, body });
         res.status(200).json({ message: "Friend added", result })
     } catch (error: any) {
         return res.status(500).json({ message: "Something went wrong" + error.message })
@@ -2132,6 +2174,44 @@ export const removeFriend = async (req: any, res: any) => {
             $pull: { friends: friend_id }
         }, { new: true }
         )
+        let messageDoc = {
+            user_id: user_id,
+            message: `You are no longer friends`,
+            message_type: 16,
+            seen: false,
+            status: 17,
+            created_at: DateTime.now().toUTC().toISO(),
+            updated_at: DateTime.now().toUTC().toISO(),
+        }
+        let chatSessionExist = await chatModel.findOne({ users: { $all: [user_id, friend_id] } })
+        if (chatSessionExist) {
+            await chatModel.findOneAndUpdate(
+                { users: { $all: [user_id, friend_id] } },
+                {
+                    has_friends: false,
+                    $push: {
+                        chat_messages: messageDoc
+                    }
+                }
+            )
+        } else {
+            await chatModel.create({
+                users: [user_id, friend_id],
+                chat_start_at: Date.now(),
+                chat_end_at: '',
+                has_friends: false,
+                socket_id: '',
+                chat_messages: [
+                    messageDoc
+                ],
+                created_at: Date.now(),
+                updated_at: Date.now(),
+            })
+        }
+        let token: any = await notificationModel.findOne({ user_id: friend_id }).populate(["user_id"]);
+        let title = `Hey, ${friendDoc?.name}`;
+        let body = `${userDoc?.name} has removed you as a friend`;
+        await sendNotifications({ tokens: [token?.pushNotificationToken], title, body });
         res.status(200).json({ message: "Friend removed" })
     } catch (error) {
         return res.status(500).json({ message: "Something went wrong" + error })
