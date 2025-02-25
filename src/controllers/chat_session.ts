@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import { sendNotifications } from "../../utils/sendNotification";
 import chatModel from "../models/chatModel";
 import notificationModel from "../models/notificationModel";
@@ -22,8 +23,8 @@ export const sendMessages = async (req: any, res: any) => {
                             message_type: 15,
                             seen: false,
                             status: 17,
-                            created_at: Date.now(),
-                            updated_at: Date.now()
+                            created_at: DateTime.now().toUTC().toISO(),
+                            updated_at: DateTime.now().toUTC().toISO()
                         }
                     }
                 }
@@ -31,7 +32,7 @@ export const sendMessages = async (req: any, res: any) => {
             } else {
                 result = await chatModel.create({
                     users: [initiate_user_id, client_user_id],
-                    chat_start_at: Date.now(),
+                    chat_start_at: DateTime.now().toUTC().toISO(),
                     chat_end_at: '',
                     socket_id: '',
                     chat_messages: [{
@@ -40,11 +41,11 @@ export const sendMessages = async (req: any, res: any) => {
                         message_type: 15,
                         seen: false,
                         status: 17,
-                        created_at: Date.now(),
-                        updated_at: Date.now()
+                        created_at: DateTime.now().toUTC().toISO(),
+                        updated_at: DateTime.now().toUTC().toISO()
                     }],
-                    created_at: Date.now(),
-                    updated_at: Date.now(),
+                    created_at: DateTime.now().toUTC().toISO(),
+                    updated_at: DateTime.now().toUTC().toISO(),
                 })
             }
         } else {
@@ -281,7 +282,7 @@ export const initiateChatSession = async (req: any, res: any) => {
                 console.log("inside initiate else exist");
                 result = await chatModel.create({
                     users: [initiate_user_id, client_user_id],
-                    chat_start_at: Date.now(),
+                    chat_start_at: DateTime.now().toUTC().toISO(),
                     chat_end_at: '',
                     socket_id: '',
                     has_friends: true,
@@ -291,15 +292,24 @@ export const initiateChatSession = async (req: any, res: any) => {
                         message_type: 15,
                         seen: false,
                         status: 17,
-                        created_at: Date.now(),
-                        updated_at: Date.now()
+                        created_at: DateTime.now().toUTC().toISO(),
+                        updated_at: DateTime.now().toUTC().toISO()
                     }],
-                    created_at: Date.now(),
-                    updated_at: Date.now(),
+                    created_at: DateTime.now().toUTC().toISO(),
+                    updated_at: DateTime.now().toUTC().toISO(),
                 })
                 let token: any = await notificationModel.findOne({ user_id: client_user_id }).populate(["user_id"]);
                 let title = `${userDoc?.name}`;
                 let body = `${message}`;
+                // await notificationModel.findOneAndUpdate(
+                //     { user_id: client_user_id }, {
+                //     notifications: [{
+                //         title,
+                //         body,
+                //         createdAt: DateTime.now().toUTC().toISO()
+                //     }]
+                // }
+                // )
                 await sendNotifications({ tokens: [token?.pushNotificationToken], title, body });
             }
         } else {

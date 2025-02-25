@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import notificationModel from "../models/notificationModel";
 
 
@@ -22,12 +23,41 @@ export const addNotificationToken = async (req: any, res: any) => {
             await notificationModel.create({
                 user_id,
                 pushNotificationToken: token,
-                createdAt: Date.now()
+                createdAt: DateTime.now().toUTC().toISO()
             })
             res.status(200).json({ message: "Notification token stored" })
         }
     } catch (error) {
         console.log(error, "backend error");
+        res.status(500).json({ message: `${error} Something went wrong` });
+    }
+}
+
+
+export const getAllUserNotifications = async (req: any, res: any) => {
+    let { user_id } = req.body;
+    try {
+        const result = await notificationModel.findOne({ user_id })
+        if (!result) {
+            return res.status(400).json({ message: "notifications doesn't exist" })
+        }
+        res.status(200).json({ message: "notifications fetched", notifications: result?.notifications })
+    } catch (error) {
+        res.status(500).json({ message: `${error} Something went wrong` });
+    }
+}
+
+
+
+export const getAllUserNotificationsCount = async (req: any, res: any) => {
+    let { user_id } = req.body;
+    try {
+        const result = await notificationModel.findOne({ user_id })
+        if (!result) {
+            return res.status(400).json({ message: "notifications doesn't exist" })
+        }
+        res.status(200).json({ message: "notifications fetched", notifCount: result?.notifications.length })
+    } catch (error) {
         res.status(500).json({ message: `${error} Something went wrong` });
     }
 }
