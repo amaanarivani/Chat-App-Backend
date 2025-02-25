@@ -10,7 +10,7 @@ import { sendNotifications } from "../../utils/sendNotification";
 // const sendMailToUser = require("../utils/sendMail");
 
 export const Signup = async (req: any, res: any) => {
-    let { name, email, password, created_at = Date.now() } = req.body;
+    let { name, email, password, created_at = DateTime.now().toUTC().toISO() } = req.body;
     // console.log(req.body, "--> email");
 
     const isExist = await userModel.findOne({ email })
@@ -2039,7 +2039,7 @@ export const updateUser = async (req: any, res: any) => {
             name,
             gender,
             avatar,
-            updated_at: Date.now()
+            updated_at: DateTime.now().toUTC().toISO()
         }, { new: true })
         res.status(200).json({ message: "User details updated", result })
     } catch (error: any) {
@@ -2114,20 +2114,31 @@ export const addFriends = async (req: any, res: any) => {
         } else {
             await chatModel.create({
                 users: [user_id, friend_id],
-                chat_start_at: Date.now(),
+                chat_start_at: DateTime.now().toUTC().toISO(),
                 chat_end_at: '',
                 has_friends: true,
                 socket_id: '',
                 chat_messages: [
                     messageDoc
                 ],
-                created_at: Date.now(),
-                updated_at: Date.now(),
+                created_at: DateTime.now().toUTC().toISO(),
+                updated_at: DateTime.now().toUTC().toISO(),
             })
         }
         let token: any = await notificationModel.findOne({ user_id: friend_id }).populate(["user_id"]);
         let title = `Hey, ${friendDoc?.name}`;
         let body = `${userDoc?.name} has added you as a friend`;
+        await notificationModel.findOneAndUpdate(
+            { user_id: friend_id }, {
+            $push: {
+                notifications: {
+                    title,
+                    body,
+                    createdAt: DateTime.now().toUTC().toISO()
+                }
+            }
+        }
+        )
         await sendNotifications({ tokens: [token?.pushNotificationToken], title, body });
         res.status(200).json({ message: "Friend added", result })
     } catch (error: any) {
@@ -2197,20 +2208,31 @@ export const removeFriend = async (req: any, res: any) => {
         } else {
             await chatModel.create({
                 users: [user_id, friend_id],
-                chat_start_at: Date.now(),
+                chat_start_at: DateTime.now().toUTC().toISO(),
                 chat_end_at: '',
                 has_friends: false,
                 socket_id: '',
                 chat_messages: [
                     messageDoc
                 ],
-                created_at: Date.now(),
-                updated_at: Date.now(),
+                created_at: DateTime.now().toUTC().toISO(),
+                updated_at: DateTime.now().toUTC().toISO(),
             })
         }
         let token: any = await notificationModel.findOne({ user_id: friend_id }).populate(["user_id"]);
         let title = `Hey, ${friendDoc?.name}`;
         let body = `${userDoc?.name} has removed you as a friend`;
+        await notificationModel.findOneAndUpdate(
+            { user_id: friend_id }, {
+            $push: {
+                notifications: {
+                    title,
+                    body,
+                    createdAt: DateTime.now().toUTC().toISO()
+                }
+            }
+        }
+        )
         await sendNotifications({ tokens: [token?.pushNotificationToken], title, body });
         res.status(200).json({ message: "Friend removed" })
     } catch (error) {

@@ -88,6 +88,15 @@ io.on("connection", (socket: any) => {
             let userDoc = await userModel.findById(data?.user_id)
             let title = `${userDoc?.name}`;
             let body = `${data?.message}`;
+            // await notificationModel.findOneAndUpdate(
+            //     { user_id: data?.friend_id }, {
+            //     notifications: [{
+            //         title,
+            //         body,
+            //         createdAt: DateTime.now().toUTC().toISO()
+            //     }]
+            // }
+            // )
             await sendNotifications({ tokens: [friendToken?.pushNotificationToken], title, body });
         } catch (error) {
 

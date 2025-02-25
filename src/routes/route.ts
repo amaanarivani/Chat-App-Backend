@@ -2,7 +2,7 @@ import express from "express";
 import { addFriends, changePassword, checkAuth, forgetPassword, forgetPasswordOtp, getAllMyFriends, getAllSuggestedUsers, getAllUsers, getCustomSingleUser, getSingleUser, removeFriend, Signin, signout, Signup, updateUser, verifyEmail, verifyEmailLogin } from "../controllers/user";
 import auth from "../middleware/auth";
 import { getAllChatSession, getNotSeenMessagesCount, getSingleChatSession, getSingleUserChatMessages, initiateChatSession, sendMessages } from "../controllers/chat_session";
-import { addNotificationToken } from "../controllers/notification";
+import { addNotificationToken, getAllUserNotifications, getAllUserNotificationsCount } from "../controllers/notification";
 
 const router = express.Router();
 
@@ -37,6 +37,8 @@ router.post("/get-not-seen-messages-count", getNotSeenMessagesCount);
 
 //------------------------------notifications-----------------------------------------------------------------
 router.post("/add-user-notification-token", addNotificationToken);
+router.post("/get-all-user-notifications", getAllUserNotifications);
+router.post("/get-all-user-notifications-count", getAllUserNotificationsCount);
 
 
 
